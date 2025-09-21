@@ -1,0 +1,10 @@
+Now, when you build your frontend image, you must provide the backend URL in the command.
+
+**1. Building the Image:**
+
+Use the `--build-arg` flag to pass the variable:
+```bash
+docker build \
+  --build-arg NEXT_PUBLIC_BACKEND_URL=http://localhost:3001 \
+  -t frontend-app \
+  -f frontend/Dockerfile .

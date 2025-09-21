@@ -70,14 +70,14 @@ const useCanvasZoom = (canvasRef: canvasRefType) => {
 
     const handleTouchStart = (event: TouchEvent) => {
       if (event.touches.length === 2) {
-        lastTouchDistance.current = getDistance(event.touches);
+        lastTouchDistance.current = getDistance(Array.from(event.touches));
         event.preventDefault();
       }
     };
 
     const handleTouchMove = (event: TouchEvent) => {
       if (event.touches.length === 2) {
-        const newDistance = getDistance(event.touches);
+        const newDistance = getDistance(Array.from(event.touches));
         const delta = newDistance - (lastTouchDistance.current ?? newDistance);
 
         const oldZoom = zoomLevel;

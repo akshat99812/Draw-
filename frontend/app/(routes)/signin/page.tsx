@@ -36,8 +36,8 @@ export default function SignInPage() {
       localStorage.setItem('authToken', data.token);
       router.push('/draw');
 
-    } catch (err: any) {
-      setError(err.message);
+    } catch (e:any) {
+      setError(e.message);
     } finally {
       setIsLoading(false);
     }

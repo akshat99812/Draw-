@@ -1,3 +1,3 @@
-export const Config = {
-    URL: "http://localhost:3001",
-  }
+export const Config ={
+  URL: process.env.NEXT_PUBLIC_BACKEND_URL
+} 
