@@ -1,0 +1,44 @@
+version: '3.8'
+
+# This file defines the services that make up your application.
+# 'docker-compose up' will read this file to build and run your containers.
+
+services:
+  # The Backend Server Service
+  server:
+    # 'build: ./server' tells Docker Compose to look for a Dockerfile in the 'server' directory and build it.
+    build: ./server
+    container_name: server-container
+    ports:
+      - "3001:3001"
+    # Environment variables are loaded from the .env file in the root directory.
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    networks:
+      - draw-it-net
+
+  # The Frontend Web App Service
+  frontend:
+    build:
+      # 'context' specifies the build directory.
+      context: ./frontend
+      # 'args' passes build-time variables to the Dockerfile.
+      # This is how we provide the backend URL.
+      # 'http://server:3001' works because Docker Compose lets containers
+      # communicate using their service names ('server' in this case).
+      args:
+        - NEXT_PUBLIC_BACKEND_URL=http://server:3001
+    container_name: frontend-container
+    ports:
+      - "3000:3000"
+    # 'depends_on' ensures that the server container is started before the frontend.
+    depends_on:
+      - server
+    networks:
+      - draw-it-net
+
+# Defines the network that our services will use to communicate with each other.
+networks:
+  draw-it-net:
+    driver: bridge
+
